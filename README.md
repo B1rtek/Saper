@@ -12,6 +12,8 @@ You can press u to give up.
 The board should be centered in the console (assuming that it's 120 characters wide) and contains a title bar inspired by the look of the original Windows minesweeper for Windows 3.1
 
 ## Building
+On Windows, you'll need MSVC compiler or an old weird version of MinGW distributed with Dev C++, on Linux you'll need either the curses or the ncurses library (if you're using ncurses change the include in saperLinux.cpp and linker argument in CMakeLists.txt)
+
 ```shell
 git clone https://github.com/B1rtek/Saper
 cd Saper
