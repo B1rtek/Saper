@@ -7,6 +7,7 @@ By default, the key bindings are:
 - wasd - move around
 - m - sweep
 - n - flag
+
 The binds can be changed in the settings to arrow keys + s and d.
 You can press u to give up.
 The board should be centered in the console (assuming that it's 120 characters wide) and contains a title bar inspired by the look of the original Windows minesweeper for Windows 3.1
