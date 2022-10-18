@@ -13,8 +13,8 @@ int plansza[200][200];                                       //GLOBALNA PLANSZA
 int odkryte[200][200];
 int winXPmode=1, np, pozostale, centrmode=1;                 //USTAWIENIA
 string winXPstate="ON", centrstate="ON";                     //RESZTA ZMIENNYCH USTAWIEŃ
-string sterstate="Lewostronne";
-string level="Łatwy";                                        //ZMIENNA POZIOMU TRUDNOŚCI
+string sterstate="WASD, M - sweep, N - flag";
+string level="Easy";                                        //ZMIENNA POZIOMU TRUDNOŚCI
 char lewo='a', prawo='d', up='w', down='s', chord='n', reveal='m';
 int ruchy=0;
 
@@ -48,29 +48,29 @@ std::string getstring()
 void menu()
 {
     system("clear");
-	cout<<"Witaj w Saperze Konsolowym 1.31!\r\n";
-	if(level=="Niestandardowy")
+	cout<<"Welcome to Terminal Minesweeper 1.31!\r\n";
+	if(level=="Custom")
 	{
-		cout<<"1 - Zacznij grę ("<<level<<" - "<<wys<<"/"<<szer<<"/"<<miny<<")\r\n";
+		cout<<"1 - Start game ("<<level<<" - "<<wys<<"/"<<szer<<"/"<<miny<<")\r\n";
 	}
 	else
 	{
-		cout<<"1 - Zacznij grę ("<<level<<")\r\n";
+		cout<<"1 - Start game ("<<level<<")\r\n";
 	}
-	cout<<"2 - Ustawienia gry\r\n";
-	cout<<"3 - Jak grać\r\n";
-	cout<<"4 - Ustawienia\r\n";
-	cout<<"5 - Wyjście\r\n";
+	cout<<"2 - Choose difficulty\r\n";
+	cout<<"3 - How to play\r\n";
+	cout<<"4 - Game settings\r\n";
+	cout<<"5 - Exit\r\n";
 }
 
 void settings()
 {
 	system("clear");
-	cout<<"Wybierz poziom trudności:\r\n";
-	cout<<"1 - Łatwy\r\n";
-	cout<<"2 - Zaawansowany\r\n";
-	cout<<"3 - Ekspert\r\n";
-	cout<<"4 - Niestandardowy...\r\n";
+	cout<<"Choose a difficulty level:\r\n";
+	cout<<"1 - Easy\r\n";
+	cout<<"2 - Advanced\r\n";
+	cout<<"3 - Expert\r\n";
+	cout<<"4 - Custom...\r\n";
     wybor=getch();
 	switch(wybor)
 	{
@@ -79,7 +79,7 @@ void settings()
 				wys=8;
 				szer=8;
 				miny=10;
-				level="Łatwy";
+				level="Easy";
 			}
 		break;
 		case '2':
@@ -87,7 +87,7 @@ void settings()
 				wys=16;
 				szer=16;
 				miny=40;
-				level="Zaawansowany";
+				level="Advanced";
 			}
 		break;
 		case '3':
@@ -95,7 +95,7 @@ void settings()
 				wys=24;
 				szer=24;
 				miny=99;
-				level="Ekspert";
+				level="Expert";
 			}
 		break;
 		case '4':
@@ -103,37 +103,37 @@ void settings()
 				err1:
 				err2:
 				err4:
-				cout<<"Podaj wysokość planszy (max=25):\r\n";
+				cout<<"Enter custom board height (max=25):\r\n";
 				wys = stoi(getstring());
 //                cin>>wys;
 				if(wys>25)
 				{
-					cout<<"To za dużo.	\r\n";
+					cout<<"That's too much.	\r\n";
 					goto err2;
 				}
 				err3:
-				cout<<"Podaj szerokość planszy (max=120):\r\n";
+				cout<<"Enter custom board width (max=120):\r\n";
 //				cin>>szer;
                 szer = stoi(getstring());
 				if(szer>120)
 				{
-					cout<<"To za dużo.	\r\n";
+					cout<<"That's too much.	\r\n";
 					goto err3;
 				}
 				if(wys*szer<10)
 				{
-					cout<<"Ta plansza jest za mała. Minimalny wymiar planszy to 10.\r\n\r\n";
+					cout<<"This board is too small. The minimum size of the board is 10.\r\n\r\n";
 					goto err4;
 				}
-				cout<<"Podaj ilość min (max="<<wys*szer-9<<"):\r\n";
+				cout<<"Enter the amount of mines (max="<<wys*szer-9<<"):\r\n";
 //				cin>>miny;
                 miny = stoi(getstring());
 				if(miny>wys*szer-9)
 				{
-					cout<<"Niewłaściwe ustawienia.\r\n";
+					cout<<"These settings are incorrect.\r\n";
 					goto err1;
 				}
-				level="Niestandardowy";
+				level="Custom";
 			}
 		break;
 	}
@@ -143,24 +143,25 @@ void ui()
 {
 	dobrazmiana:
 	system("clear");
-	cout<<"Ustawienia\r\n";
-	cout<<"1 - Rozdzielczość\r\n";
+	cout<<"Game settings\r\n";
+	cout<<"1 - Change resolution\r\n";
 	cout<<"2 - Windows Mode: "<<winXPstate<<"\r\n";
-	cout<<"3 - Centralizacja: "<<centrstate<<"\r\n";
-	cout<<"4 - Sterowanie: "<<sterstate<<"\r\n";
+	cout<<"3 - Center the board: "<<centrstate<<"\r\n";
+	cout<<"4 - Key binds: "<<sterstate<<"\r\n";
 	wybor=getch();
 	switch(wybor)
 	{
 		case '1':
 			{
 				system("clear");
-				cout<<"Aby zmienić rozdzielczość:\r\n";
-				cout<<" - Kliknij prawym na pasek konsoli -> Właściwości\r\n";
-				cout<<" - W zakładce Czcionka zmiana rozmiaru zmieni wielkośc elementów. \r\n   Domyślny rozmiar to 16.\r\n";
-				cout<<"Przy zmniejszaniu rozdzielczości może nastąpić spadek wielkości okna gry. Aby ją zmienić:\r\n";
-				cout<<" - Kliknij prawym na pasek konsoli -> Właściwości\r\n";
-				cout<<" - W zakładce Układ zmień rozmiar okna na 120x30 - jest to minimum dla tego programu.\r\n";
-				cout<<"Przy zwiększaniu rozdzielczości sugerowane jest wyłączenie centralizacji.\r\n";
+				cout << "Not supported\r\n";
+//                cout<<"Aby zmienić rozdzielczość:\r\n";
+//				cout<<" - Kliknij prawym na pasek konsoli -> Właściwości\r\n";
+//				cout<<" - W zakładce Czcionka zmiana rozmiaru zmieni wielkośc elementów. \r\n   Domyślny rozmiar to 16.\r\n";
+//				cout<<"Przy zmniejszaniu rozdzielczości może nastąpić spadek wielkości okna gry. Aby ją zmienić:\r\n";
+//				cout<<" - Kliknij prawym na pasek konsoli -> Właściwości\r\n";
+//				cout<<" - W zakładce Układ zmień rozmiar okna na 120x30 - jest to minimum dla tego programu.\r\n";
+//				cout<<"Przy zwiększaniu rozdzielczości sugerowane jest wyłączenie centralizacji.\r\n";
 				/*HWND console = GetConsoleWindow();
 				RECT ConsoleRect;
 				GetWindowRect(console, &ConsoleRect);
@@ -203,17 +204,17 @@ void ui()
 		break;
 		case '4':
 			{
-				if(sterstate=="Lewostronne")
+				if(sterstate=="WASD, M - sweep, N - flag")
 				{
-					sterstate="Prawostronne";
+					sterstate="Arrow keys, D - sweep, S - flag";
 					lewo=75; prawo=77, up=72, down=80, chord='s', reveal='d';
-					cout<<"\r\nZmieniono sterowanie na strzałki + s = chord, d = reveal\r\n";
+					cout<<"\r\nChanged binds to: Arrow keys, D - sweep, S - flag\r\n";
 				}
 				else
 				{
-					sterstate="Lewostronne";
+					sterstate="WASD, M - sweep, N - flag";
 					lewo='a'; prawo='d', up='w', down='s', chord='n', reveal='m';
-					cout<<"\r\nZmieniono sterowanie na wasd + n = chord, m = reveal\r\n";
+					cout<<"\r\nChanged binds to: WASD, M - sweep, N - flag\r\n";
 				}
 				system("pause");
 				goto dobrazmiana;
@@ -226,13 +227,13 @@ void howToPlayOTejgrze()
 {
 //	HANDLE hOut;
 	system("clear");
-	cout<<"Oflaguj wszystkie miny, aby wygrać!\r\n";
-	cout<<"Liczby na polach oznaczają ilość min naokoło pola. Ilość min pozostałych do oznaczenia\r\npokazana jest poniżej planszy.\r\n";
-	cout<<"Sterowanie:\r\n";
-	cout<<"w, a, s, d - poruszanie się po planszy\r\n";
-	cout<<"m - odkrycie pola\r\n";
-	cout<<"n - na polu nieodkrytym - oflagowanie pola\r\n";
-	cout<<"  - na polu odkrytym - chord\n\r\n";
+	cout<<"Flag all mines to win!\r\n";
+	cout<<"Number on a field tells how many mines are on the adjacent fields around it. The amount of mines left\r\nis shown on the counter below the board or on the titlebar.\r\n";
+//	cout<<"Sterowanie:\r\n";
+//	cout<<"w, a, s, d - poruszanie się po planszy\r\n";
+//	cout<<"m - odkrycie pola\r\n";
+//	cout<<"n - na polu nieodkrytym - oflagowanie pola\r\n";
+//	cout<<"  - na polu odkrytym - chord\n\r\n";
 //	SetConsoleTextAttribute(hOut, 0);
 	getch();
 //	SetConsoleTextAttribute(hOut, 7);
@@ -767,7 +768,7 @@ void gra(int wys, int szer, int miny)
 					cout<<" ";
 				}
 			}
-			cout<<"Pozostało:"<<flagi;
+			cout<<"Mines left:"<<flagi;
 		}
 		//WIN CONDITION
 		if(oflagowane==miny)
