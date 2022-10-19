@@ -1,4 +1,5 @@
-#include <bits/stdc++.h>                                     //BITSY SĄ NAJLEPSZE - BITSY FOREVER!!!
+#include <iostream>                                          //BITSY SĄ NAJLEPSZE - BITSY FOREVER!!! (lmao nie)
+#include <string>
 #include <windows.h>                                         //NIE MA TO JAK APLIKACJE KONSOLOWE !!!! :DDDD nie bo są za wolne
 #include <conio.h>                                           //EZ INPUT BOIIII
 #include <queue>                                             //YEA BOII ADVANCED CODING TEKNIQUEZ (tak btw to to jest w bitsach)
@@ -803,7 +804,7 @@ void gra(int wys, int szer, int miny)
 					{
 						//GENERACJA PLANSZY - LOSOWANIE MIN
 						int wielkosc=wys*szer;
-						int wynikL[wielkosc+1];
+						int wynikL[3600];
 						for(int i=1; i<=wielkosc; i++)
 						{
 							wynikL[i]=0;
